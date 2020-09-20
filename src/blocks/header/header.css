@@ -1,0 +1,13 @@
+@import url(./__logo/header__logo.css);
+.header {
+   min-height: 73px;
+   margin: 0 0 36px;
+   border-bottom: 1px solid rgba(84, 84, 84, .7);
+}
+
+@media screen and (max-width: 660px) {
+   .header {
+     min-height: 55px;
+     margin: 0 0 38px;          
+   }
+}
