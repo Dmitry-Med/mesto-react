@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import editButton from "../images/pen.svg";
 import addButton from "../images/plus.svg";
 import Card from "./Card";
-import { api } from "../utils/api.js";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CardsContext } from "../contexts/CardsContext";
 
 function Main({
   onEditProfile,
   onAddPlace,
   onEditAvatar,
-  onTrashClick,
   onCardClick,
+  onCardLike,
+  onCardDelete,
 }) {
-  const [userName, setUserName] = useState("Жак-Ив Кусто");
-  const [userDescription, setUserDescription] = useState(
-    "Исследователь океана"
-  );
-  const [userAvatar, setUserAvatar] = useState();
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    api.getAppInfo().then((res) => {
-      const [cards, info] = res;
-      setUserName(info.name);
-      setUserDescription(info.about);
-      setUserAvatar(info.avatar);
-      setCards(cards);
-    });
-  }, []);
+  const currentUser = useContext(CurrentUserContext);
+  const cards = useContext(CardsContext);
 
   return (
     <main className="content">
@@ -35,11 +23,11 @@ function Main({
           type="button"
           className="profile__avatar "
           onClick={onEditAvatar}
-          style={{ backgroundImage: ` url(${userAvatar})` }}
-        ></button>
+          style={{ backgroundImage: ` url(${currentUser.avatar})` }}
+        />
         <div className="profile__text-box">
           <div className="profile__name-box">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button
               className="edit-button edit-button_opened"
               onClick={onEditProfile}
@@ -51,7 +39,7 @@ function Main({
               />
             </button>
           </div>
-          <p className="profile__about">{userDescription}</p>
+          <p className="profile__about">{currentUser.about}</p>
         </div>
         <button className="add-button add-button_opened" onClick={onAddPlace}>
           <img
@@ -63,12 +51,13 @@ function Main({
       </section>
       <section className="cards" aria-label="Карточки">
         <ul className="cards__list">
-          {cards.map((card, i) => (
+          {cards.map((card) => (
             <Card
-              key={i}
+              key={card._id}
               card={card}
               onCardClick={onCardClick}
-              onTrashClick={onTrashClick}
+              onCardDelete={onCardDelete}
+              onCardLike={onCardLike}
             />
           ))}
         </ul>

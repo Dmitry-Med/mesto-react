@@ -1,5 +1,6 @@
 @import url(./__image/card__image.css);
 @import url(./__trash/card__trash.css);
+@import url(./__trash/_hidden/card__trash_hidden.css);
 @import url(./__text-box/card__text-box.css);
 @import url(./__title/card__title.css);
 @import url(./__like-box/card__like-box.css);
@@ -9,8 +10,8 @@
 
 .card {
   max-width: 100%;
-  width: 100%; 
-  background: #FFFFFF;
+  width: 100%;
+  background: #ffffff;
   border-radius: 10px;
   position: relative;
 }
